@@ -1,0 +1,21 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~react-toastify/dist/ReactToastify.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+// .btn,
+// .btn:focus{
+//   box-shadow: none;
+// }
+
+// .btn:hover {
+//   border-color: none;
+//   background-color: none;
+// }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+

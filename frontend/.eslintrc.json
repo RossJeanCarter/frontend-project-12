@@ -22,6 +22,12 @@
         "react"
     ],
     "rules": {
+        "jsx-a11y/label-has-associated-control": ["error", {
+            "controlComponents": ["Field"]
+          }],
+        "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
+        "arrow-body-style": ["error", "as-needed"],
+        "react/jsx-one-expression-per-line": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
