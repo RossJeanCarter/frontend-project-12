@@ -26,6 +26,7 @@
             "controlComponents": ["Field"]
           }],
         "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
+        "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
         "arrow-body-style": ["error", "as-needed"],
         "react/jsx-one-expression-per-line": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

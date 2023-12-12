@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignupSchema = yup.object().shape({
   username: yup.string().required('Обязательное поле'),
@@ -8,7 +10,10 @@ const SignupSchema = yup.object().shape({
 });
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+  const [token, setToken] = useState(null);
   const usernameInputRef = useRef(null);
+  const [authentificationError, setAuthentificationError] = useState(false);
 
   useEffect(() => {
     usernameInputRef.current.focus();
@@ -21,7 +26,17 @@ const SignupForm = () => {
     },
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      console.log(values);
+      axios.post('/api/v1/login', values).then((response) => {
+        setToken(response.data.token);
+        localStorage.setItem('token', response.data.token);
+        console.log(response.data.token);
+        console.log(token);
+        navigate('/');
+      })
+        .catch((error) => {
+          console.log(error);
+          setAuthentificationError(true);
+        });
     },
   });
 
@@ -51,15 +66,15 @@ const SignupForm = () => {
                           required=""
                           placeholder="Ваш ник"
                           id="username"
-                          className="form-control"
+                          className={`form-control ${authentificationError && 'is-invalid'}`}
                           value={formik.values.username}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           ref={usernameInputRef}
                         />
-                        {formik.touched.username && formik.errors.username ? (
+                        {formik.touched.username && formik.errors.username && (
                           <div className="error-message">{formik.errors.username}</div>
-                        ) : null}
+                        )}
                         <label htmlFor="username">Ваш ник</label>
                       </div>
                       <div className="form-floating mb-4">
@@ -70,15 +85,16 @@ const SignupForm = () => {
                           placeholder="Пароль"
                           type="password"
                           id="password"
-                          className="form-control"
+                          className={`form-control ${authentificationError && 'is-invalid'}`}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           value={formik.values.password}
                         />
-                        {formik.touched.password && formik.errors.password ? (
+                        {formik.touched.password && formik.errors.password && (
                           <div className="error-message">{formik.errors.password}</div>
-                        ) : null}
+                        )}
                         <label className="form-label" htmlFor="password">Пароль</label>
+                        { authentificationError && <div className="invalid-tooltip">Неверные имя пользователя или пароль</div> }
                       </div>
                       <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
                     </form>
