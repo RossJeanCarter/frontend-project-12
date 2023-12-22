@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import channelsReducer, { handleSocketEvents } from './slices/channelsSlice';
+import channelsReducer from './slices/channelsSlice';
 import currentChannelReducer from './slices/currentChannelSlice';
 import messagesReducer from './slices/messagesSlice';
 
@@ -11,3 +11,5 @@ export default configureStore({
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(handleSocketEvents()),
 });
+
+// handleSocketEvents импорт из channelSlice.
